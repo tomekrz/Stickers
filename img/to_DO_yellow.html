@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: thistle;
+            height: 100vh;
+            width: 1920px;
+            overflow: hidden;
+        }
+
+        main {
+            background-image: linear-gradient(thistle, rgb(149, 56, 236));
+            height: 100%;
+        }
+
+
+
+
+
+
+
+        i {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            cursor: pointer;
+            display: none;
+            color: rgba(214, 168, 15, 0);
+            transition: 0.3s;
+
+        }
+
+        li:hover i:hover {
+            color: black;
+        }
+
+
+
+        li {
+            display: block;
+            width: 200px;
+            min-height: 200px;
+            background-color: rgb(252, 231, 44);
+            border: solid 1px rgb(204, 204, 204);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+
+            padding: 10px;
+            font-family: 'Indie Flower', cursive;
+
+
+
+            /* transition: 0.3s; */
+            /* transform: translate(-100%, -100%); */
+
+
+        }
+
+        li:hover i {
+            color: rgba(214, 168, 15, 0.336);
+
+        }
+
+        li:hover {
+            transform: scale(1.03);
+            box-shadow: 20px 20px 10px rgba(128, 128, 128, 0.356);
+        }
+
+        /* ul {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: tomato;
+        } */
+
+        li h4 {
+            font-size: 25px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        li p {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="title">
+    <input type="text" id="description">
+    <main><button>Dodaj zadanie</button>
+        <ul></ul>
+
+    </main>
+
+
+
+
+
+
+
+    <script>
+        const btn = document.querySelector("button");
+        let i = 0;
+
+
+
+
+        const addElement = function () {
+            let titleArea = document.querySelector("#title").value;
+            let textArea = document.querySelector("#description").value;
+            const createLi = document.createElement("li");
+            createLi.id = `e${i}`
+            createLi.innerHTML = `<h4>${titleArea}</h4><p>${textArea}</p> <i class="fas fa-times"></i>`
+            document.querySelector("ul").appendChild(createLi);
+
+
+
+
+
+
+
+            const listicker = document.querySelectorAll('li');
+            listicker.forEach(item => {
+                    // item.addEventListener("click", deliteElement)
+
+
+                    let liX;
+                    let liY;
+                    item.style.left = liX + "px";
+                    item.style.top = liY + "px";
+                    let drawActive = false;
+                    let insertLiX;
+                    let insertLiY;
+
+                    item.addEventListener("mousedown", (event) => {
+                        item.style.backgroundColor = "rgb(255, 191, 71)";
+                        item.style.zIndex = "9999";
+                        drawActive = true;
+                        insertLiX = event.offsetX;
+                        insertLiY = event.offsetY;
+
+                    });
+                    window.addEventListener("mouseup", function () {
+                        item.style.backgroundColor = "rgb(252, 231, 44)";
+                        drawActive = false;
+                        item.style.zIndex = "0";
+
+                    });
+
+
+
+                    item.addEventListener("mousemove", function (event) {
+                        if (drawActive == true) {
+                            liX = event.clientX - insertLiX;
+                            liY = event.clientY - insertLiY;
+                            item.style.left = `${liX}px`;
+                            item.style.top = `${liY}px`;
+                        }
+                    });
+
+
+
+
+
+                }
+
+            );
+            const removeElement = (e) => {
+
+                e.target.parentNode.remove();
+                // console.log(e.target.parentNode)
+            }
+            document.querySelectorAll("li i").forEach(item =>
+                item.addEventListener("click", removeElement)
+            );
+
+            i++
+
+        }
+
+
+
+        // const listicker = document.querySelectorAll('li');
+        // window.addEventListener("mouseup", function () {
+        //     console.log('ok');
+        //     for (let i = 0; i < listicker.lenght; i++) {
+        //         listicker[i].style.backgroundColor = "rgb(252, 231, 44)";
+        //         drawActive = false;
+        //         listicker[i].style.zIndex = "1";
+        //         console.log(' w srodku ok');
+        //     }
+        // });
+
+
+        btn.addEventListener("click", addElement);
+    </script>
+</body>
+
+</html>
